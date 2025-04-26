@@ -105,7 +105,7 @@ public class ImportadorExcel {
                                      "passageiros_pagantes, passageiros_integracao, passageiros_gratuidade, passageiros_total, " +
                                      "partidas_ponto_inicial, partidas_ponto_final) " +
                                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
-
+                        conn.setAutoCommit(false);
                     java.util.Date dataPlanilha = getDate(row, 0);
                     if (dataPlanilha == null) continue;
 
@@ -125,6 +125,7 @@ public class ImportadorExcel {
 
                     stmt.executeUpdate();
                     count++;
+                    conn.commit();
                 }
             }
 
