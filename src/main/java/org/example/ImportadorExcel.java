@@ -21,9 +21,9 @@ import software.amazon.awssdk.core.ResponseInputStream;
 
 public class ImportadorExcel {
 
-    private static final String BUCKET_NAME = "exerciciosptechcalace";  // Nome correto do seu bucket S3
-    private static final String FOLDER_IN = "fila/";  // Pasta onde os arquivos estão inicialmente
-    private static final String FOLDER_OUT = "concluido/";  // Pasta onde os arquivos serão movidos após processamento
+    private static final String BUCKET_NAME = ""
+    private static final String FOLDER_IN = "fila/";  
+    private static final String FOLDER_OUT = "concluido/";
 
     public static void main(String[] args) {
         // Listar arquivos .xlsx no bucket S3 na pasta "fila"
