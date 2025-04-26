@@ -142,7 +142,7 @@ public class ImportadorExcel {
 
     // Mover o arquivo para a pasta 'concluido' no bucket S3
     private static void moverArquivoParaConcluido(S3Client s3Client, String arquivoS3) {
-        String novoCaminho = arquivoS3.replace("fila/", "concluido/");
+        String novoCaminho = arquivoS3.replace(FOLDER_IN, FOLDER_OUT);
 
         // Copiar o arquivo para a pasta 'concluido'
         CopyObjectRequest copyRequest = CopyObjectRequest.builder()
