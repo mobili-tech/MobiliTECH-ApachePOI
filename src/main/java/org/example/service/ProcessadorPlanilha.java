@@ -15,6 +15,7 @@ public class ProcessadorPlanilha {
 
     private final ImportadorS3 importadorS3 = new ImportadorS3();
     private final TransporteDAO dao = new TransporteDAO();
+    private final LogService log = new LogService();
 
     public void processar(String caminhoArquivoS3) {
         try (InputStream input = importadorS3.baixarArquivo(caminhoArquivoS3);
@@ -57,8 +58,10 @@ public class ProcessadorPlanilha {
             dao.salvarRegistros(registros);
             importadorS3.moverParaConcluido(caminhoArquivoS3);
 
+            log.registrarInfo("Inserção de Registros",registros.size() + " registros inseridos de " + caminhoArquivoS3);
             System.out.println("✅ " + registros.size() + " registros inseridos de " + caminhoArquivoS3);
         } catch (Exception e) {
+            log.registrarErro("Erro ao processar arquivo", "Erro ao processar arquivo: " + caminhoArquivoS3);
             System.err.println("❌ Erro ao processar arquivo: " + caminhoArquivoS3);
             e.printStackTrace();
         }

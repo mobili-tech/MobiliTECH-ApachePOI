@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.service.LogService;
 import org.example.util.AWSUtils;
 import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.regions.Region;
@@ -14,6 +15,7 @@ public class ImportadorS3 {
     private static final String BUCKET_NAME = "mobilitech";
     private static final String FOLDER_IN = "fila/";
     private static final String FOLDER_OUT = "concluido/";
+    private final LogService log = new LogService();
 
     private final S3Client s3 = S3Client.builder()
             .region(Region.US_EAST_1)
@@ -35,6 +37,7 @@ public class ImportadorS3 {
                     .collect(Collectors.toList());
 
         } catch (Exception e) {
+            log.registrarErro("Erro ao listar arquivos", e.getMessage());
             System.err.println("❌ Erro ao listar arquivos: " + e.getMessage());
             return List.of();
         }
@@ -51,6 +54,7 @@ public class ImportadorS3 {
             return response;
 
         } catch (Exception e) {
+            log.registrarErro("Erro ao baixar arquivo", e.getMessage());
             System.err.println("❌ Erro ao baixar arquivo: " + caminho);
             throw new RuntimeException(e);
         }
@@ -75,9 +79,10 @@ public class ImportadorS3 {
                     .build();
 
             s3.deleteObject(deleteRequest);
-
+            log.registrarInfo("Movimentação de Arquivos S3","Arquivo movido para"+ novoCaminho);
             System.out.println("✅ Arquivo movido para: " + novoCaminho);
         } catch (Exception e) {
+            log.registrarErro("Erro ao mover arquivo S3", "Erro ao mover arquivo: "+ caminhoOriginal);
             System.err.println("❌ Erro ao mover arquivo: " + caminhoOriginal);
             e.printStackTrace();
         }
