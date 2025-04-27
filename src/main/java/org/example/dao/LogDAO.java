@@ -6,9 +6,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
 public class LogDAO {
-    private String jdbcUrl = System.getenv("DB_HOST");
-    private String usuario = System.getenv("DB_USER");
-    private String senha = System.getenv("DB_PSWD");
+    private final String jdbcUrl = System.getenv("DB_HOST");
+    private final String usuario = System.getenv("DB_USER");
+    private final String senha = System.getenv("DB_PSWD");
 
     public void inserirLog(Log log) {
         String sql = "INSERT INTO log (tipo, informacao, descricao) VALUES (?, ?, ?)";
