@@ -20,9 +20,4 @@ public class LogService {
         Log log = new Log("ERROR", informacao, descricao);
         logDAO.inserirLog(log);
     }
-
-    public void registrarAviso(String informacao, String descricao) {
-        Log log = new Log("WARNING", informacao, descricao);
-        logDAO.inserirLog(log);
-    }
 }
