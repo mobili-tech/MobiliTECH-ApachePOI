@@ -11,11 +11,10 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ImportadorS3 {
+public class ImportadorS3 extends LogService {
     private static final String BUCKET_NAME = "mobilitech";
     private static final String FOLDER_IN = "fila/";
     private static final String FOLDER_OUT = "concluido/";
-    private final LogService log = new LogService();
 
     private final S3Client s3 = S3Client.builder()
             .region(Region.US_EAST_1)
@@ -37,7 +36,7 @@ public class ImportadorS3 {
                     .collect(Collectors.toList());
 
         } catch (Exception e) {
-            log.registrarErro("Erro ao listar arquivos", e.getMessage());
+            registrarErro("Erro ao listar arquivos", e.getMessage());
             System.err.println("❌ Erro ao listar arquivos: " + e.getMessage());
             return List.of();
         }
@@ -54,7 +53,7 @@ public class ImportadorS3 {
             return response;
 
         } catch (Exception e) {
-            log.registrarErro("Erro ao baixar arquivo", e.getMessage());
+            registrarErro("Erro ao baixar arquivo", e.getMessage());
             System.err.println("❌ Erro ao baixar arquivo: " + caminho);
             throw new RuntimeException(e);
         }
@@ -79,10 +78,10 @@ public class ImportadorS3 {
                     .build();
 
             s3.deleteObject(deleteRequest);
-            log.registrarInfo("Movimentação de Arquivos S3","Arquivo movido para"+ novoCaminho);
+            registrarInfo("Movimentação de Arquivos S3","Arquivo movido para"+ novoCaminho);
             System.out.println("✅ Arquivo movido para: " + novoCaminho);
         } catch (Exception e) {
-            log.registrarErro("Erro ao mover arquivo S3", "Erro ao mover arquivo: "+ caminhoOriginal);
+            registrarErro("Erro ao mover arquivo S3", "Erro ao mover arquivo: "+ caminhoOriginal);
             System.err.println("❌ Erro ao mover arquivo: " + caminhoOriginal);
             e.printStackTrace();
         }
