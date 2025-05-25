@@ -55,7 +55,7 @@ public class ProcessadorPlanilha {
                 registros.add(r);
             }
 
-            dao.salvarRegistros(registros);
+            dao.inserir(registros);
             importadorS3.moverParaConcluido(caminhoArquivoS3);
 
             log.registrarInfo("Inserção de Registros",registros.size() + " registros inseridos de " + caminhoArquivoS3);

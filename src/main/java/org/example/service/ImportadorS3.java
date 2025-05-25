@@ -1,8 +1,6 @@
 package org.example.service;
 
-import org.example.service.LogService;
 import org.example.util.AWSUtils;
-import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
@@ -49,8 +47,7 @@ public class ImportadorS3 extends LogService {
                     .key(caminho)
                     .build();
 
-            ResponseInputStream<GetObjectResponse> response = s3.getObject(request);
-            return response;
+            return s3.getObject(request);
 
         } catch (Exception e) {
             registrarErro("Erro ao baixar arquivo", e.getMessage());
@@ -83,7 +80,6 @@ public class ImportadorS3 extends LogService {
         } catch (Exception e) {
             registrarErro("Erro ao mover arquivo S3", "Erro ao mover arquivo: "+ caminhoOriginal);
             System.err.println("❌ Erro ao mover arquivo: " + caminhoOriginal);
-            e.printStackTrace();
         }
     }
 }

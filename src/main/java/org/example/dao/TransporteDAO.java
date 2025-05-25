@@ -7,14 +7,19 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class TransporteDAO {
+public class TransporteDAO implements DAO<List<RegistroTransporte>> {
+
+    private static final Logger logger = Logger.getLogger(TransporteDAO.class.getName());
 
     private final String jdbcUrl = System.getenv("DB_HOST");
     private final String usuario = System.getenv("DB_USER");
     private final String senha = System.getenv("DB_PSWD");
 
-    public void salvarRegistros(List<RegistroTransporte> registros) {
+    @Override
+    public void inserir(List<RegistroTransporte> registros) {
         String sql = """
             INSERT INTO transporte (
                 data, grupo, lote, empresa, linha,
@@ -48,16 +53,16 @@ public class TransporteDAO {
                 stmt.setInt(15, r.passageirosTotal);
                 stmt.setInt(16, r.partidasPontoInicial);
                 stmt.setInt(17, r.partidasPontoFinal);
+
                 stmt.addBatch();
             }
 
             stmt.executeBatch();
             conn.commit();
+            logger.info("✅ Registros de transporte inseridos com sucesso!");
 
         } catch (Exception e) {
-            System.err.println("❌ Erro ao salvar registros no banco:");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "❌ Erro ao salvar registros no banco: " + e.getMessage(), e);
         }
     }
 }
-

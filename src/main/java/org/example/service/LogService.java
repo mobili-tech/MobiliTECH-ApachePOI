@@ -7,11 +7,11 @@ public class LogService {
 
     public static void registrarInfo(String informacao, String descricao) {
         Log log = new Log("INFO", informacao, descricao);
-        LogDAO.inserirLog(log);
+        new LogDAO().inserir(log);
     }
 
     public static void registrarErro(String informacao, String descricao) {
         Log log = new Log("ERROR", informacao, descricao);
-        LogDAO.inserirLog(log);
+        new LogDAO().inserir(log);
     }
 }
