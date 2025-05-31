@@ -1,6 +1,7 @@
 package org.example.dao;
 
 import org.example.model.RegistroTransporte;
+import org.example.service.LogService;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -11,8 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class TransporteDAO implements DAO<List<RegistroTransporte>> {
-
-    private static final Logger logger = Logger.getLogger(TransporteDAO.class.getName());
 
     private final String jdbcUrl = System.getenv("DB_HOST");
     private final String usuario = System.getenv("DB_USER");
@@ -59,10 +58,10 @@ public class TransporteDAO implements DAO<List<RegistroTransporte>> {
 
             stmt.executeBatch();
             conn.commit();
-            logger.info("✅ Registros de transporte inseridos com sucesso!");
+            LogService.registrarInfo("✅Registros de transporte movidos com sucesso!", "");
 
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "❌ Erro ao salvar registros no banco: " + e.getMessage(), e);
+           LogService.registrarErro("❌ Erro ao mover registros no banco","Erro ao salvar registros no banco: " + e.getMessage());
         }
     }
 }

@@ -25,7 +25,7 @@ public class ImportadorExcel {
         try{
             TransporteService service = new TransporteService();
             service.processarTransporte();
-            System.out.println("Migração concluída com sucesso.");
+            System.out.println("✅ Migração concluída com sucesso.");
         } catch (Exception e) {
         }
 
