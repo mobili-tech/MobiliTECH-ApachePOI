@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.service.ImportadorS3;
 import org.example.service.ProcessadorPlanilha;
+import org.example.service.TransporteService;
 
 import java.util.List;
 
@@ -19,6 +20,13 @@ public class ImportadorExcel {
 
         for (String arquivo : arquivos) {
             processador.processar(arquivo);
+        }
+
+        try{
+            TransporteService service = new TransporteService();
+            service.processarTransporte();
+            System.out.println("Migração concluída com sucesso.");
+        } catch (Exception e) {
         }
 
         System.out.println("✅ Processamento concluído.");
