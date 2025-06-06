@@ -5,6 +5,8 @@ public class Linha {
     private String nome;
     private int fkEmpresa;
     private int fkGrupo;
+    private int qtdViagensIda;
+    private int qtdViagensVolta;
 
     public int getIdLinha() { return idLinha; }
     public void setIdLinha(int idLinha) { this.idLinha = idLinha; }
@@ -17,4 +19,10 @@ public class Linha {
 
     public int getFkGrupo() { return fkGrupo; }
     public void setFkGrupo(int fkGrupo) { this.fkGrupo = fkGrupo; }
+
+    public int getQtdViagensIda() { return qtdViagensIda; }
+    public void setQtdViagensIda(int qtdViagensIda) { this.qtdViagensIda = qtdViagensIda; }
+
+    public int getQtdViagensVolta() { return qtdViagensVolta; }
+    public void setQtdViagensVolta(int qtdViagensVolta) { this.qtdViagensVolta = qtdViagensVolta; }
 }

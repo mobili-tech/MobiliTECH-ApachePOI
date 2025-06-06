@@ -6,7 +6,9 @@ import java.sql.*;
 public class LinhaDAO {
     private Connection conn;
 
-    public LinhaDAO(Connection conn) { this.conn = conn; }
+    public LinhaDAO(Connection conn) {
+        this.conn = conn;
+    }
 
     public Linha findByNomeEmpresaGrupo(String nome, int fkEmpresa, int fkGrupo) throws SQLException {
         String sql = "SELECT * FROM linha WHERE nome = ? AND fkEmpresa = ? AND fkGrupo = ?";
@@ -21,6 +23,8 @@ public class LinhaDAO {
                     l.setNome(rs.getString("nome"));
                     l.setFkEmpresa(rs.getInt("fkEmpresa"));
                     l.setFkGrupo(rs.getInt("fkGrupo"));
+                    l.setQtdViagensIda(rs.getInt("qtdViagensIda"));
+                    l.setQtdViagensVolta(rs.getInt("qtdViagensVolta"));
                     return l;
                 }
             }
@@ -28,20 +32,22 @@ public class LinhaDAO {
         return null;
     }
 
-    public Linha insert(Linha linha) throws SQLException {
-        String sql = "INSERT INTO linha (nome, fkEmpresa, fkGrupo) VALUES (?, ?, ?)";
+    public void insert(Linha linha) {
+        String sql = "INSERT INTO linha (nome, fkEmpresa, fkGrupo, qtdViagensIda, qtdViagensVolta) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, linha.getNome());
             ps.setInt(2, linha.getFkEmpresa());
             ps.setInt(3, linha.getFkGrupo());
+            ps.setInt(4, linha.getQtdViagensIda());
+            ps.setInt(5, linha.getQtdViagensVolta());
             ps.executeUpdate();
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
                     linha.setIdLinha(rs.getInt(1));
-                    return linha;
                 }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao inserir linha", e);
         }
-        throw new SQLException("Falha ao inserir linha");
     }
 }

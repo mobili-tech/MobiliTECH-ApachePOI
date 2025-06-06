@@ -50,13 +50,16 @@ public class TransporteService {
                 String linhaNome = rs.getString("linha");
                 Date data = rs.getDate("data");
                 int passageirosTotal = rs.getInt("passageiros_total");
+                int qtdViagensIda = rs.getInt("partidas_ponto_inicial");
+                int qtdViagensVolta = rs.getInt("partidas_ponto_final");
+
 
                 Empresa empresa = empresaCache.get(empresaNome);
                 if (empresa == null) {
-                    empresa = empresaDAO.findByRazaoSocial(empresaNome);
+                    empresa = empresaDAO.findByNomeFantasia(empresaNome);
                     if (empresa == null) {
                         empresa = new Empresa();
-                        empresa.setRazaoSocial(empresaNome);
+                        empresa.setNomeFantasia(empresaNome);
                         empresaDAO.insert(empresa);
                     }
                     empresaCache.put(empresaNome, empresa);
@@ -82,6 +85,8 @@ public class TransporteService {
                         linha.setNome(linhaNome);
                         linha.setFkEmpresa(empresa.getIdEmpresa());
                         linha.setFkGrupo(grupo.getIdGrupo());
+                        linha.setQtdViagensIda(qtdViagensIda);
+                        linha.setQtdViagensVolta(qtdViagensVolta);
                         linhaDAO.insert(linha);
                     }
                     linhaCache.put(linhaKey, linha);
