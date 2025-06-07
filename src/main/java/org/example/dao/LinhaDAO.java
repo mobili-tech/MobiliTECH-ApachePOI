@@ -3,7 +3,7 @@ package org.example.dao;
 import org.example.model.Linha;
 import java.sql.*;
 
-public class LinhaDAO {
+public class LinhaDAO implements DAO<Linha>{
     private Connection conn;
 
     public LinhaDAO(Connection conn) {
@@ -32,6 +32,7 @@ public class LinhaDAO {
         return null;
     }
 
+    @Override
     public void insert(Linha linha) {
         String sql = "INSERT INTO linha (nome, fkEmpresa, fkGrupo, qtdViagensIda, qtdViagensVolta) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {

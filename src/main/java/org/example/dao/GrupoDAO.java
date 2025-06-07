@@ -3,7 +3,7 @@ package org.example.dao;
 import org.example.model.Grupo;
 import java.sql.*;
 
-public class GrupoDAO {
+public class GrupoDAO implements ReturnableDAO<Grupo>{
     private Connection conn;
 
     public GrupoDAO(Connection conn) { this.conn = conn; }
@@ -24,6 +24,7 @@ public class GrupoDAO {
         return null;
     }
 
+    @Override
     public Grupo insert(Grupo grupo) throws SQLException {
         String sql = "INSERT INTO grupo (tipo) VALUES (?)";
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {

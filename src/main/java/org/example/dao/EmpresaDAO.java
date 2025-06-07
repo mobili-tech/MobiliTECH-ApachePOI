@@ -1,10 +1,11 @@
 package org.example.dao;
 
+import org.apache.poi.ss.formula.functions.T;
 import org.example.model.Empresa;
 
 import java.sql.*;
 
-public class EmpresaDAO {
+public class EmpresaDAO implements DAO<Empresa>{
     private Connection conn;
 
     public EmpresaDAO(Connection conn) {
@@ -27,6 +28,7 @@ public class EmpresaDAO {
         return null;
     }
 
+    @Override
     public void insert(Empresa empresa) {
         String sql = "INSERT INTO empresa (nomeFantasia) VALUES (?)";
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {

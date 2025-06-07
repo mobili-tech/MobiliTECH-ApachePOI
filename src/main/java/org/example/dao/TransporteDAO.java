@@ -18,7 +18,7 @@ public class TransporteDAO implements DAO<List<RegistroTransporte>> {
     private final String senha = System.getenv("DB_PSWD");
 
     @Override
-    public void inserir(List<RegistroTransporte> registros) {
+    public void insert(List<RegistroTransporte> registros) {
         String sql = """
             INSERT INTO transporte (
                 data, grupo, lote, empresa, linha, passageiros_total,

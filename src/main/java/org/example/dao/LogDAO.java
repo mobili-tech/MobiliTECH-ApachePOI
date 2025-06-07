@@ -12,7 +12,7 @@ public class LogDAO implements DAO<Log> {
     private static final String senha = System.getenv("DB_PSWD");
 
     @Override
-    public void inserir(Log log) {
+    public void insert(Log log) {
         String sql = "INSERT INTO log (tipo, informacao, descricao) VALUES (?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(jdbcUrl, usuario, senha);

@@ -3,11 +3,12 @@ package org.example.dao;
 import org.example.model.Registro;
 import java.sql.*;
 
-public class RegistroDAO {
+public class RegistroDAO implements ReturnableDAO<Registro>{
     private Connection conn;
 
     public RegistroDAO(Connection conn) { this.conn = conn; }
 
+    @Override
     public Registro insert(Registro registro) throws SQLException {
         String sql = "INSERT INTO registro (fkLinha, fkEmpresa, dtRegistro, qtdPassageiros) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
