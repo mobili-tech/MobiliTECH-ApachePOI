@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ImportadorS3 extends LogService {
-    private static final String BUCKET_NAME = "exerciciosptechcalace";
+    private static final String BUCKET_NAME = "mobilitech";
     private static final String FOLDER_IN = "fila/";
     private static final String FOLDER_OUT = "concluido/";
 

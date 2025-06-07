@@ -7,15 +7,6 @@ public class RegistroTransporte {
     public String lote;
     public String empresa;
     public String linha;
-    public int passageirosDinheiro;
-    public int passageirosComumVT;
-    public int passageirosComumM;
-    public int passageirosEstudante;
-    public int passageirosEstudanteMensal;
-    public int passageirosVTMensal;
-    public int passageirosPagantes;
-    public int passageirosIntegracao;
-    public int passageirosGratuidade;
     public int passageirosTotal;
     public int partidasPontoInicial;
     public int partidasPontoFinal;

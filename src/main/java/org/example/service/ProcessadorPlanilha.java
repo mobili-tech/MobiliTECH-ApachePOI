@@ -6,6 +6,8 @@ import org.example.dao.TransporteDAO;
 import org.example.model.RegistroTransporte;
 
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,18 +41,9 @@ public class ProcessadorPlanilha {
                 r.lote = getString(row, 2);
                 r.empresa = getString(row, 3);
                 r.linha = getString(row, 4);
-                r.passageirosDinheiro = getInt(row, 5);
-                r.passageirosComumVT = getInt(row, 6);
-                r.passageirosComumM = getInt(row, 7);
-                r.passageirosEstudante = getInt(row, 8);
-                r.passageirosEstudanteMensal = getInt(row, 9);
-                r.passageirosVTMensal = getInt(row, 10);
-                r.passageirosPagantes = getInt(row, 11);
-                r.passageirosIntegracao = getInt(row, 12);
-                r.passageirosGratuidade = getInt(row, 13);
-                r.passageirosTotal = getInt(row, 14);
-                r.partidasPontoInicial = getInt(row, 15);
-                r.partidasPontoFinal = getInt(row, 16);
+                r.passageirosTotal = getInt(row, 18);
+                r.partidasPontoInicial = getInt(row, 19);
+                r.partidasPontoFinal = getInt(row, 20);
 
                 registros.add(r);
             }
@@ -67,11 +60,20 @@ public class ProcessadorPlanilha {
         }
     }
 
-    // Métodos auxiliares
     private java.util.Date getDate(Row row, int columnIndex) {
         Cell cell = row.getCell(columnIndex);
-        if (cell != null && cell.getCellType() == CellType.NUMERIC && DateUtil.isCellDateFormatted(cell)) {
-            return cell.getDateCellValue();
+        if (cell != null) {
+            if (cell.getCellType() == CellType.NUMERIC && DateUtil.isCellDateFormatted(cell)) {
+                return cell.getDateCellValue();
+            } else if (cell.getCellType() == CellType.STRING) {
+                String cellValue = cell.getStringCellValue();
+                try {
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    return sdf.parse(cellValue);
+                } catch (ParseException e) {
+                    System.out.println("Erro ao converter data de string: " + e.getMessage());
+                }
+            }
         }
         return null;
     }

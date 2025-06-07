@@ -103,12 +103,26 @@ public class TransporteService {
 
             conn.commit();
             LogService.registrarInfo("Movimentacao de Registros","Registros movimentados com sucesso");
+            System.out.println("✅ Migração concluída com sucesso.");
+            truncateTransporteTable();
+
         } catch (SQLException e) {
             conn.rollback();
             LogService.registrarErro("Erro na movimentacao de Registros","Erro ao movimentar registros");
             throw e;
         } finally {
             conn.close();
+        }
+    }
+
+    private void truncateTransporteTable() {
+        String truncateSql = "TRUNCATE TABLE transporte";
+        try (Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate(truncateSql);
+            LogService.registrarInfo("TRUNCATE Table", "Tabela 'transporte' truncada com sucesso.");
+            System.out.println("✅ Tabela 'transporte' truncada com sucesso.");
+        } catch (SQLException e) {
+            LogService.registrarErro("Erro ao truncar tabela", "Erro ao executar TRUNCATE na tabela 'transporte': " + e.getMessage());
         }
     }
 }
