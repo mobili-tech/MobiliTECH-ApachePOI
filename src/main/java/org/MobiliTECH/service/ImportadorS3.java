@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 
 public class ImportadorS3 extends LogService {
     private static final String BUCKET_NAME = "mobilitech";
-    private static final String FOLDER_IN = "concluido/";
-    private static final String FOLDER_OUT = "fila/";
+    private static final String FOLDER_IN = "fila/";
+    private static final String FOLDER_OUT = "concluido/";
 
     private final S3Client s3 = new S3Provider().getS3Client();
 
