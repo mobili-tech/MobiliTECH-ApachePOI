@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 public class ProcessadorPlanilha {
-
+    NotificacaoSlackService notificacaoSlackService = new NotificacaoSlackService();
     private final ImportadorS3 importadorS3 = new ImportadorS3();
     private final TransporteDAO dao = new TransporteDAO();
 
@@ -49,10 +49,11 @@ public class ProcessadorPlanilha {
 
             dao.insert(registros);
             importadorS3.moverParaConcluido(caminhoArquivoS3);
-
+            notificacaoSlackService.enviarNotificacoes("Inserção de Registros: " + registros.size() + " registros inseridos de " + caminhoArquivoS3);
             LogService.registrarInfo("Inserção de Registros",registros.size() + " registros inseridos de " + caminhoArquivoS3);
             System.out.println("✅ " + registros.size() + " registros inseridos de " + caminhoArquivoS3);
         } catch (Exception e) {
+            notificacaoSlackService.enviarNotificacoes("❌ Erro ao processar arquivo: " + caminhoArquivoS3);
             LogService.registrarErro("Erro ao processar arquivo", "Erro ao processar arquivo: " + caminhoArquivoS3);
             System.err.println("❌ Erro ao processar arquivo: " + caminhoArquivoS3);
         }
